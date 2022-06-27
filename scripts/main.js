@@ -11,6 +11,8 @@ const bookshop = [
 //console.log(bookshop);
 //console.table(bookshop);
 
+let spisok;
+
 const allBtnLnk = document.querySelector('button[name="allBtn"]');
 const mainContLnk = document.querySelector('.main-container');
 const autorBtnLnk = document.querySelector('button[name="autorBtn"]');
@@ -19,13 +21,15 @@ const yearBtnLnk = document.querySelector('button[name="yearBtn"]');
 const prcBtnLnk = document.querySelector('button[name="prcBtn"]');
 const rsltLink = document.querySelector('.result');
 
-
+const makeSpisok = () => {
+    spisok = '';
+    bookshop.forEach((item) => {
+    spisok+= `${item.autor} | ${item.name} | ${item.year} | Price: ${item.price}<br>`; 
+})
+}
 
 allBtnLnk.addEventListener('click', (ev) => {
-    let spisok = '';
-    bookshop.forEach((item) => {
-    spisok+= `${item.autor} | ${item.name} | ${item.year} | Price: ${item.price}<br>`;
-    })
+    makeSpisok();
     mainContLnk.innerHTML = spisok;
 })
 
@@ -36,10 +40,7 @@ autorBtnLnk.addEventListener('click', (ev) => {
         if(a.autor === b.autor) return 0;
     })
 
-    let spisok = '';
-    bookshop.forEach((item) => {
-    spisok+= `${item.autor} | ${item.name} | ${item.year} | Price: ${item.price}<br>`;
-    })
+    makeSpisok();
     rsltLink.innerHTML = spisok;
 })
 
@@ -51,10 +52,7 @@ nameBtnLnk.addEventListener('click', (ev) => {
         if(a.name === b.name) return 0;
     })
     
-    let spisok = '';
-    bookshop.forEach((item) => {
-    spisok+= `${item.autor} | ${item.name} | ${item.year} | Price: ${item.price}<br>`;
-    })
+    makeSpisok();
     rsltLink.innerHTML = spisok;
 })
 
@@ -66,10 +64,7 @@ yearBtnLnk.addEventListener('click', (ev) => {
         if(a.year === b.year) return 0;
     })
 
-    let spisok = '';
-    bookshop.forEach((item) => {
-    spisok+= `${item.autor} | ${item.name} | ${item.year} | Price: ${item.price}<br>`;
-    })
+    makeSpisok();
     rsltLink.innerHTML = spisok;
 })
 
@@ -79,12 +74,22 @@ prcBtnLnk.addEventListener('click', (ev) => {
         if(a.price > b.price) return 1;
         if(a.price === b.price) return 0;
     })
-    
+
+    makeSpisok();
+    rsltLink.innerHTML = spisok;
+})
+
+const prcFilterLnk = document.querySelector('input[name="prcFilter"]');
+
+prcFilterLnk.addEventListener('change', (ev) => {
     let spisok = '';
     bookshop.forEach((item) => {
-    spisok+= `${item.autor} | ${item.name} | ${item.year} | Price: ${item.price}<br>`;
-    })
-    rsltLink.innerHTML = spisok;
+        
+        if (item.price < ev.target.value) {
+        spisok+= `${item.autor} | ${item.name} | ${item.year} | Price: ${item.price}<br>`;
+    }
+        })
+        rsltLink.innerHTML = spisok;
 })
 
 
